@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+<body>
+    {% extends "learning_logs/base.html"%}
+
+    {% block content %}
+
+        <h3>Tópico: {{ topic }}</h3>
+
+        <p>Entradas:</p>
+        <ul>
+            {% for entry in entries %}
+            
+                <li>
+                    <p>{{ entry.date_added | date:'M d, Y H:i'}}</p>
+                    <p>{{ entry.text | linebreaks}}</p>
+                </li>
+
+            {% empty %}
+                
+                <li>
+                    <p>Não há registro.</p>
+                </li>
+            
+            {% endfor %}
+        </ul>
+
+    {% endblock content %}
+</body>
+</html>
