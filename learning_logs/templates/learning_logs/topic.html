@@ -10,9 +10,12 @@
 
     {% block content %}
 
-        <h3>Tópico: {{ topic }}</h3>
+        <p>Tópico: {{ topic }}</p>
 
         <p>Entradas:</p>
+
+        <p><a href="{% url 'new_entry' topic.id %}">Adicionar entrada</a></p>
+
         <ul>
             {% for entry in entries %}
             
