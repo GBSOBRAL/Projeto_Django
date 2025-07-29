@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
 from django.http import HttpResponseRedirect, Http404
@@ -91,3 +91,32 @@ def edit_entry(request, entry_id):
     
     context = {'entry' : entry, 'topic' : topic, 'form' : form}
     return render(request, 'learning_logs/edit_entry.html', context)
+
+@login_required
+def delete_entry(request, entry_id):
+    """Exclui uma entrada existente"""
+    entry = Entry.objects.get(id=entry_id)
+    topic = entry.topic
+
+    if topic.owner != request.user:
+        raise Http404
+    
+    task = get_object_or_404(Entry, pk=entry_id)
+    task.delete()
+    
+    context = {'entry' : entry, 'topic' : topic, 'task' : task}
+    return HttpResponseRedirect(reverse('topic', args=[topic.id]))
+
+@login_required
+def delete_topic(request, topic_id):
+    """Exclui um tópico existente"""
+    topic = Topic.objects.get(id=topic_id)
+
+    if topic.owner != request.user:
+        raise Http404
+    
+    task = get_object_or_404(Topic, pk=topic_id)
+    task.delete()
+    
+    context = {'topic' : topic, 'task' : task}
+    return HttpResponseRedirect(reverse('topics', args=[]))

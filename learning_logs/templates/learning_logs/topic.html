@@ -23,6 +23,7 @@
                     <p>{{ entry.date_added | date:'M d, Y H:i'}}</p>
                     <p>{{ entry.text | linebreaks}}</p>
                     <p><a href="{% url 'edit_entry' entry.id %}">Editar entrada</a></p>
+                    <p><a href="{% url 'delete_entry' entry.id %}">Excluir entrada</a></p>
                 </li>
 
             {% empty %}
@@ -33,6 +34,8 @@
             
             {% endfor %}
         </ul>
+
+        <p><a href="{% url 'delete_topic' topic.id %}">Excluir tópico</a></p>
 
     {% endblock content %}
 </body>
